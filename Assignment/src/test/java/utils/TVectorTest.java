@@ -6,7 +6,7 @@ package utils;
  * and open the template in the editor.
  */
 
-import engine.util.Vec3;
+import util.Vec3;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;

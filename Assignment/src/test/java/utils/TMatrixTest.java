@@ -6,7 +6,7 @@ package utils;
  * and open the template in the editor.
  */
 
-import engine.util.Mat3;
+import util.Mat3;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
