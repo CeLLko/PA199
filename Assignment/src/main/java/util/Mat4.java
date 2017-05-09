@@ -74,20 +74,86 @@ public class Mat4 {
         this.a31 -other.a31,this.a32 -other.a32,this.a33 -other.a33, this.a34 -other.a34, 
         this.a41 -other.a41,this.a42 -other.a42,this.a43 -other.a43, this.a44 -other.a44);
     }
-    /*
+    
     public Mat4 mul(Mat4 other){
-        return new Mat4(this.a11*other.a11 + this.a12*other.a21 + this.a13*other.a31,
-                this.a11*other.a12 + this.a12*other.a22 + this.a13*other.a32,
-                this.a11*other.a13 + this.a12*other.a23 + this.a13*other.a33,
+        return new Mat4(
+                this.a11*other.a11 + this.a12*other.a21 + this.a13*other.a31 + this.a14*other.a41,
+                this.a11*other.a12 + this.a12*other.a22 + this.a13*other.a32 + this.a14*other.a42,
+                this.a11*other.a13 + this.a12*other.a23 + this.a13*other.a33 + this.a14*other.a43,
+                this.a11*other.a14 + this.a12*other.a24 + this.a13*other.a34 + this.a14*other.a44,
                 
-                this.a21*other.a11 + this.a22*other.a21 + this.a23*other.a31,
-                this.a21*other.a12 + this.a22*other.a22 + this.a23*other.a32,
-                this.a21*other.a13 + this.a22*other.a23 + this.a23*other.a33,
+                this.a21*other.a11 + this.a22*other.a21 + this.a23*other.a31 + this.a24*other.a41,
+                this.a21*other.a12 + this.a22*other.a22 + this.a23*other.a32 + this.a24*other.a42,
+                this.a21*other.a13 + this.a22*other.a23 + this.a23*other.a33 + this.a24*other.a43,
+                this.a21*other.a14 + this.a22*other.a24 + this.a23*other.a34 + this.a24*other.a44,
                 
-                this.a31*other.a11 + this.a32*other.a21 + this.a33*other.a31,
-                this.a31*other.a12 + this.a32*other.a22 + this.a33*other.a32,
-                this.a31*other.a13 + this.a32*other.a23 + this.a33*other.a33);
-    }*/
+                this.a31*other.a11 + this.a32*other.a21 + this.a33*other.a31 + this.a34*other.a41,
+                this.a31*other.a12 + this.a32*other.a22 + this.a33*other.a32 + this.a34*other.a42,
+                this.a31*other.a13 + this.a32*other.a23 + this.a33*other.a33 + this.a34*other.a43,
+                this.a31*other.a14 + this.a32*other.a24 + this.a33*other.a34 + this.a34*other.a44,
+                
+                this.a41*other.a11 + this.a42*other.a21 + this.a43*other.a31 + this.a44*other.a41,
+                this.a41*other.a12 + this.a42*other.a22 + this.a43*other.a32 + this.a44*other.a42,
+                this.a41*other.a13 + this.a42*other.a23 + this.a43*other.a33 + this.a44*other.a43,
+                this.a41*other.a14 + this.a42*other.a24 + this.a43*other.a34 + this.a44*other.a44
+        );
+    }
+    
+    public Mat4 scale(double x, double y, double z){
+        return this.mul(new Mat4(
+                x,  0,  0,  0,
+                0,  y,  0,  0,
+                0,  0,  z,  0,
+                0,  0,  0,  1
+        ));
+    }
+    
+    public Mat4 translate(double x, double y, double z){
+        return this.mul(new Mat4(
+                1,  0,  0,  x,
+                0,  1,  0,  y,
+                0,  0,  1,  z,
+                0,  0,  0,  1
+        ));
+    }
+    
+    public static Mat4 translate(Mat4 other, double x, double y, double z){
+        return other.translate(x,y,z);
+    }
+    
+    public static Mat4 rotate(Mat4 other, double x, double y, double z){
+        return other.rotate(x,y,z);
+    }
+    
+    public Mat4 rotate(double x, double y, double z){
+        return this.mul(rotateX(x)).mul(rotateY(y)).mul(rotateZ(z));
+    }
+    
+    private Mat4 rotateX(double rad){
+        return new Mat4(
+                1,              0,                      0,                  0,
+                0,              Math.cos(rad),          -Math.sin(rad),     0,
+                0,              Math.sin(rad),          Math.cos(rad),      0,
+                0,              0,                      0,                  1
+        );
+    }
+    private Mat4 rotateY(double rad){
+        return new Mat4(
+                Math.cos(rad),  0,                      Math.sin(rad),      0,
+                0,              1,                      0,                  0,
+                -Math.sin(rad), 0,                      Math.cos(rad),      0,
+                0,              0,                      0,                  1
+        );
+    }
+    private Mat4 rotateZ(double rad){
+        return new Mat4(
+                Math.cos(rad),  -Math.sin(rad),         0,                  0,
+                Math.sin(rad),  Math.cos(rad),          0,                  0,
+                0,              0,                      1,                  0,
+                0,              0,                      0,                  1
+        );
+    }
+    
     
     public Mat4 transpone(){
         return new Mat4(this.a11, this.a21, this.a31, this.a41,
